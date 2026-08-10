@@ -1,0 +1,58 @@
+/* bottomnav.css */
+
+:host {
+  display: block;
+  padding: 3rem 1.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.heading {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.heading h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #1a1a6e;
+  margin-bottom: 0.5rem;
+}
+
+.heading h6 {
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: #555;
+}
+
+.steps {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.step {
+  flex: 1;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.2s;
+}
+
+.step:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.step h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1a1a6e;
+  margin-bottom: 0.5rem;
+}
+
+.step p {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.6;
+}
