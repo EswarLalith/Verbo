@@ -47,6 +47,7 @@ textarea {
   resize: vertical;
   box-sizing: border-box;
   margin-top: 0.5rem;
+  field-sizing:content;
 }
 
 textarea:focus {
