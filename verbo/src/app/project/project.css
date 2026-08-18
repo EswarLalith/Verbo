@@ -67,7 +67,7 @@ textarea:focus {
   transition: background 0.2s;
 }
 
-#optimizeBtn {
+.optimize-btn {
   background: #4f46e5;
   color: white;
   border: none;
@@ -78,10 +78,33 @@ textarea:focus {
   transition: background 0.2s;
 }
 
-#optimizeBtn:hover {
+.optimize-btn:hover {
   background: #4338ca;
 }
 
 #micBtn:hover {
   background: #4338ca;
+}
+
+#micBtn.recording {
+  background: #dc2626;
+}
+
+#micBtn.recording:hover {
+  background: #b91c1c;
+}
+
+.optimize-btn:disabled,
+#micBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.Text.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.Text.disabled textarea {
+  background: #f3f4f6;
 }

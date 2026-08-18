@@ -8,22 +8,30 @@
 </div>
 
 <div class="Audio">
-    <label for="Audio transcription">Audio Transcription</label>
-    <button type="button" id="micBtn" style="font-size: 10px; padding: 10px;">
-        🎤 Speak
+    <label>Audio Transcription</label>
+    <button type="button" id="micBtn" (click)="toggleRecording()" [disabled]="loading()"
+            [class.recording]="recording()">
+        @if (recording()) { ⏹ Stop } @else { 🎤 Speak }
     </button>
-    <textarea placeholder="Speak into the button"></textarea>
+    <textarea placeholder="Speak into the button" [value]="transcription()" readonly></textarea>
+    <button type="button" class="optimize-btn" (click)="optimizeAudio()"
+            [disabled]="loading() || !transcription()">
+        @if (audioOptimizing()) { Optimizing... } @else { Optimize }
+    </button>
 </div>
 
-<div class="Text">
-    <label for="Text transcription">Text Transcription</label>
-    <textarea placeholder="Enter your text here" (input)="userText.set($any($event.target).value)"></textarea>
-    <button type="button" class="optimize-btn" (click)="optimize()" [disabled]="loading()">
-        @if (loading()) { Optimizing... } @else { Optimize }
+<div class="Text" [class.disabled]="audioBusy()">
+    <label>Text Transcription</label>
+    <textarea placeholder="Enter your text here"
+              (input)="userText.set($any($event.target).value)"
+              [readonly]="audioBusy()"></textarea>
+    <button type="button" class="optimize-btn" (click)="optimize()"
+            [disabled]="loading() || audioBusy()">
+        @if (loading() && !audioOptimizing()) { Optimizing... } @else { Optimize }
     </button>
 </div>
 
 <div class="gpt-text">
-    <label for="Token optimized text">Token Optimized Text</label>
+    <label>Token Optimized Text</label>
     <textarea placeholder="View Token Optimized text here" [value]="optimizedText()" readonly></textarea>
 </div>
