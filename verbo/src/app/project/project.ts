@@ -74,7 +74,10 @@ export class Project {
 
   optimizeAudio(): void {
     const text = this.transcription();
-    if (!text.trim()) return;
+    if (!text.trim()) {
+      this.optimizedText.set('Enter the text first');
+      return;
+    }
 
     this.audioOptimizing.set(true);
     this.loading.set(true);
@@ -94,7 +97,10 @@ export class Project {
 
   optimize(): void {
     const text = this.userText();
-    if (!text.trim()) return;
+    if (!text.trim()) {
+      this.optimizedText.set('Enter the text first');
+      return;
+    }
 
     this.loading.set(true);
     this.optimizeService.optimize(text).subscribe({

@@ -15,7 +15,7 @@
     </button>
     <textarea placeholder="Speak into the button" [value]="transcription()" readonly></textarea>
     <button type="button" class="optimize-btn" (click)="optimizeAudio()"
-            [disabled]="loading() || !transcription()">
+            [disabled]="loading()">
         @if (audioOptimizing()) { Optimizing... } @else { Optimize }
     </button>
 </div>

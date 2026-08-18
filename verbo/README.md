@@ -1,59 +1,130 @@
 # Verbo
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.3.
+**Stop rambling. Start saying what you mean.**
 
-## Development server
+Verbo is a token optimization tool that takes your messy, filler-heavy text and distills it into something sharp and effective. Speak it or type it — Verbo strips the fluff and gives you back clean, concise text powered by Google's Gemini AI.
 
-To start a local development server, run:
+---
+
+## What It Does
+
+| Input | Output |
+|-------|--------|
+| "I was just basically trying to like figure out how to um make my code better" | "I'm trying to improve my code" |
+
+Verbo works in two modes:
+
+- **Voice** — Hit the mic, talk naturally, stop. Verbo transcribes your speech and optimizes it in one shot.
+- **Text** — Paste or type your rough draft, hit Optimize, get polished output.
+
+---
+
+## Tech Stack
+
+| Layer | Tech |
+|-------|------|
+| Frontend | Angular 22, TypeScript, RxJS |
+| Backend | Python 3.14, FastAPI, Uvicorn |
+| AI | Google Gemini 3.5 Flash |
+| Audio | Browser MediaRecorder API (WebM) |
+
+---
+
+## Project Structure
+
+```
+Verbo/
+├── verbo/                          # Angular frontend
+│   └── src/app/
+│       ├── project/                # Main UI — mic, textareas, optimize buttons
+│       ├── bottomnav/              # "How this works" step cards
+│       └── core/services/          # OptimizeService (HTTP calls to backend)
+│
+└── backend/                        # Python FastAPI backend
+    ├── main.py                     # API endpoints (/optimize, /transcribe)
+    └── venv/                       # Python virtual environment (not committed)
+```
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+
+- Python 3.10+
+- A [Gemini API key](https://aistudio.google.com/apikey) (free tier works)
+
+### Frontend
 
 ```bash
+cd Verbo/verbo
+npm install
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Runs on `http://localhost:4200`
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Backend
 
 ```bash
-ng generate component component-name
+cd Verbo/backend
+python -m venv venv
+venv\Scripts\activate          # Windows
+# source venv/bin/activate     # macOS/Linux
+pip install fastapi uvicorn google-generativeai python-multipart
+set GEMINI_API_KEY=your-key    # Windows
+# export GEMINI_API_KEY=your-key  # macOS/Linux
+uvicorn main:app --reload
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Runs on `http://localhost:8000`
 
-```bash
-ng generate --help
+---
+
+## API Endpoints
+
+### `GET /`
+Health check. Returns `{"message": "Verbo API is running"}`
+
+### `POST /optimize`
+Optimizes text by removing filler words and redundancy.
+
+**Request:**
+```json
+{ "text": "I was just basically trying to like figure out how to um make my code better" }
 ```
 
-## Building
-
-To build the project run:
-
-```bash
-ng build
+**Response:**
+```json
+{ "optimized_text": "I'm trying to improve my code" }
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+### `POST /transcribe`
+Accepts an audio file, transcribes it, and returns both raw and optimized text.
 
-## Running unit tests
+**Request:** `multipart/form-data` with an `audio` file field (WebM)
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
+**Response:**
+```json
+{
+  "transcription": "I was just basically trying to...",
+  "optimized_text": "I'm trying to improve my code"
+}
 ```
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
+## How It Works
 
-```bash
-ng e2e
-```
+1. **Audio Transcription** — Click the mic, speak, click stop. The browser records audio via `MediaRecorder`, sends the WebM blob to `/transcribe`, Gemini transcribes it, and the result fills the Audio textarea.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+2. **Text Transcription** — Type or paste text directly. Hit Optimize to send it to `/optimize`.
 
-## Additional Resources
+3. **Token Optimization** — Gemini receives the raw text with a prompt to strip filler words (um, uh, like, basically, you know), cut redundancy, and return clean output. The result appears in the Token Optimized Text box.
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+---
+
+## License
+
+MIT
