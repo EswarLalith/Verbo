@@ -17,10 +17,13 @@
 
 <div class="Text">
     <label for="Text transcription">Text Transcription</label>
-    <textarea placeholder="Enter your text here"></textarea>
+    <textarea placeholder="Enter your text here" (input)="userText.set($any($event.target).value)"></textarea>
+    <button type="button" class="optimize-btn" (click)="optimize()" [disabled]="loading()">
+        @if (loading()) { Optimizing... } @else { Optimize }
+    </button>
 </div>
 
 <div class="gpt-text">
     <label for="Token optimized text">Token Optimized Text</label>
-    <textarea placeholder="View Token Optimized text here"></textarea>
+    <textarea placeholder="View Token Optimized text here" [value]="optimizedText()" readonly></textarea>
 </div>
