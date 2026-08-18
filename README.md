@@ -51,7 +51,7 @@ Verbo/
 
 ### Prerequisites
 
-- Node.js 18+
+- NVS
 - Python 3.10+
 - A [Gemini API key](https://aistudio.google.com/apikey) (free tier works)
 
